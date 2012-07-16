@@ -6,6 +6,7 @@ Gem::Specification.new do |s|
   s.description       = 'Convert gettext PO files to json to use in your javascript app, based po2json.pl (by DuckDuckGo, Inc. http://duckduckgo.com/, Torsten Raudssus <torsten@raudss.us>.)'
   s.authors           = ["Nubis", "eromirou"]
   s.email             = 'nubis@woobiz.com.ar'
-  s.files             = Dir["lib/**/*"] + ["README.md"]
+  s.files             = Dir["lib/**/*"] + ["README.md", "MIT-LICENSE"]
+  s.homepage          = "https://github.com/nubis/po_to_json"
   s.add_dependency('json', '1.7.0')
 end
