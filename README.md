@@ -9,7 +9,7 @@ with Jed ( http://slexaxton.github.com/Jed/ )
 
 Via rubygems:
 ```ruby
-gem install 'po_to_json'
+gem install po_to_json
 ```
 
 In your gemfile:
