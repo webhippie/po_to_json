@@ -33,7 +33,7 @@ describe PoToJson do
   describe 'when generating a jed compatible file' do
     before(:all){ @jed_json = @subject.generate_for_jed('de') }
     it { @jed_json.include?("var locales = locales || {}; locales['de'] = ").should be_true }
-    it { @jed_json.include?('"domain":"messages"').should be_true }
+    it { @jed_json.include?('"domain":"app"').should be_true }
     it { @jed_json.include?('"lang":"de"').should be_true }
     it { @jed_json.include?('"plural_forms":" nplurals=INTEGER; plural=EXPRESSION;"').should be_true }
   end

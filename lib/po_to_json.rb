@@ -26,12 +26,12 @@ class PoToJson
     @parsed ||= self.parse
 
     @parsed['']['lang'] = language_code
-    @parsed['']['domain'] = 'messages'
+    @parsed['']['domain'] = 'app'
     @parsed['']['plural_forms'] ||= @parsed['']['Plural-Forms']
 
     jed_json = {
-      domain: 'messages',
-      locale_data: @parsed
+      domain: 'app',
+      locale_data: { app: @parsed }
     }
   
     "var locales = locales || {}; locales['#{language_code}'] = #{jed_json.to_json};"
