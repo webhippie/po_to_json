@@ -19,11 +19,19 @@ gem 'po_to_json'
 
 ## Usage
 
-Simply parses a po file generating the corresponding JSON encoded string.
+Most common use would be to generate a Jed ready javascript file. For example, in a Rails 3 project:
 
 ```ruby
 require 'po_to_json'
-json_string = PoToJson.new.parse_po('/path/to/your/translations.po')
+json_string = PoToJson.new("#{Rails.root}/locale/es/app.po").generate_for_jed('es')
+File.open("#{Rails.root}/app/assets/javascripts/locale/es/app.js",'w').write(json_string)
+```
+
+The javascript file generated has a global 'locales' object with an attribute corresponding to the generated language:
+
+```javascript
+i18n = new Jed(locales['es'])
+i18n.gettext('Hello World') // Should evaluate to 'Hola Mundo'
 ```
 
 ## Maintainers

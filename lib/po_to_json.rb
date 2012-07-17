@@ -2,14 +2,55 @@ require 'json'
 
 class PoToJson
 
-  CONTEXT_GLUE = '|'
 
-  def parse_po(path_to_po)
+  # Gettext translations may be contextualized like so User|name
+  # The default 'GLUE' in rails gettext is '|' so we use that here too.
+  def initialize(path_to_po, context_glue = '|')
+    # Gettext translations may be contextualized like so User|name
+    # The default 'GLUE' in rails gettext is '|' so we use that here too.
+    @context_glue = context_glue
+    @path_to_po = path_to_po
+  end
+
+  
+  # Generates a jed-compatible js file from the current PO.
+  # This include adding some wrapping structure to the translations and
+  # making sure the minimum headers required by Jed are provided.
+  # Jed is a js gettext library ( http://slexaxton.github.com/Jed/ )
+  # The generated file leaves the generated json inside a global locales
+  # object which you can use to instatiate Jed:
+  # >>> i18n = new Jed(locales['es'])
+  # >>> i18n.gettext('Hello World')
+  # => 'Hola Mundo'
+  def generate_for_jed(language_code)
+    @parsed ||= self.parse
+
+    @parsed['']['lang'] = language_code
+    @parsed['']['domain'] = 'messages'
+    @parsed['']['plural_forms'] ||= @parsed['']['Plural-Forms']
+
+    jed_json = {
+      domain: 'messages',
+      locale_data: @parsed
+    }
+  
+    "var locales = locales || {}; locales['#{language_code}'] = #{jed_json.to_json};"
+  end
+  
+
+  # Messages in a PO file are defined as a series of 'key value' pairs,
+  # values may span over more than one line. Each key defines an attribute
+  # of the message, like message id, context, pluralization options, etc.
+  # Each message is separated by a blank line.
+  # The parser reads attributes until it finds an empty line, at that point
+  # it saves the attributes read so far into a message and stores it in a hash
+  # to be later turned into a json object.
+  def parse
     @parsed_values = {}
     @buffer = {}
     @last_key_type = ""
     @errors = []
-    File.foreach(path_to_po) do |line|
+    File.foreach(@path_to_po) do |line|
       line = line.chomp
       case line
         # Empty lines means we have parsed one full message
@@ -47,14 +88,14 @@ class PoToJson
     # This will turn the header values into a friendlier json structure too.
     parse_header_lines
   
-    return @parsed_values.to_json
+    return @parsed_values
   end
   
   def flush_buffer
     return unless @buffer[:msgid]
 
     msg_ctxt_id = if @buffer[:msgctxt] && @buffer[:msgctxt].size > 0
-      @buffer[:msgctxt] + CONTEXT_GLUE + @buffer[:msgid]
+      @buffer[:msgctxt] + @context_glue + @buffer[:msgid]
     else
       @buffer[:msgid]
     end
