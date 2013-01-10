@@ -8,5 +8,5 @@ Gem::Specification.new do |s|
   s.email             = 'nubis@woobiz.com.ar'
   s.files             = Dir["lib/**/*"] + ["README.md", "MIT-LICENSE"]
   s.homepage          = "https://github.com/nubis/po_to_json"
-  s.add_dependency 'multi_json'
+  s.add_dependency 'json'
 end

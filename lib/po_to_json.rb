@@ -1,4 +1,4 @@
-require 'multi_json'
+require 'json'
 
 class PoToJson
 
@@ -34,7 +34,11 @@ class PoToJson
       locale_data: { app: @parsed }
     }
 
-    "var locales = locales || {}; locales['#{language_code}'] = #{MultiJson.dump(jed_json, opts)};"
+    if opts[:pretty]
+      "var locales = locales || {}; locales['#{language_code}'] = #{JSON.pretty_generate(jed_json)};"
+    else
+      "var locales = locales || {}; locales['#{language_code}'] = #{JSON.generate(jed_json)};"
+    end
   end
 
 
