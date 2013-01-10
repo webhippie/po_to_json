@@ -1,4 +1,4 @@
-require 'json'
+require 'multi_json'
 
 class PoToJson
 
@@ -12,7 +12,7 @@ class PoToJson
     @path_to_po = path_to_po
   end
 
-  
+
   # Generates a jed-compatible js file from the current PO.
   # This include adding some wrapping structure to the translations and
   # making sure the minimum headers required by Jed are provided.
@@ -33,10 +33,10 @@ class PoToJson
       domain: 'app',
       locale_data: { app: @parsed }
     }
-  
-    "var locales = locales || {}; locales['#{language_code}'] = #{jed_json.to_json};"
+
+    "var locales = locales || {}; locales['#{language_code}'] = #{MultiJson.dump(jed_json)};"
   end
-  
+
 
   # Messages in a PO file are defined as a series of 'key value' pairs,
   # values may span over more than one line. Each key defines an attribute
@@ -56,12 +56,12 @@ class PoToJson
         # Empty lines means we have parsed one full message
         # so far and need to flush the buffer
         when /^$/ then flush_buffer
-        
+
         # These are the po file comments
         # The second '#' in the following regex is in square brackets
         # b/c it messed up my syntax highlighter, no other reason.
         when /^(#[^~]|[#]$)/ then next
-        
+
         when /^(?:#~ )?msgctxt\s+(.*)/ then add_to_buffer($1, :msgctxt)
 
         when /^(?:#~ )?msgid\s+(.*)/ then add_to_buffer($1, :msgid)
@@ -75,7 +75,7 @@ class PoToJson
         when /^(?:#~ )?msgstr\[(\d+)\]\s+(.*)/ then add_to_buffer($2, "msgstr_#{$1}".to_sym)
 
         when /^(?:#~ )?"/ then add_to_buffer(line)
-        
+
         else
           @errors << ["Strange line #{line}"]
       end
@@ -84,13 +84,13 @@ class PoToJson
     # In case the file did not end with a newline, we want to flush the buffer
     # one more time to write the last message too.
     flush_buffer
-    
+
     # This will turn the header values into a friendlier json structure too.
     parse_header_lines
-  
+
     return @parsed_values
   end
-  
+
   def flush_buffer
     return unless @buffer[:msgid]
 
@@ -99,7 +99,7 @@ class PoToJson
     else
       @buffer[:msgid]
     end
-    
+
     msgid_plural = if @buffer[:msgid_plural] && @buffer[:msgid_plural].size > 0
       @buffer[:msgid_plural]
     end
@@ -111,12 +111,12 @@ class PoToJson
     end
     trans.unshift(msgid_plural)
 
-    @parsed_values[msg_ctxt_id] = trans if trans.size > 1   
+    @parsed_values[msg_ctxt_id] = trans if trans.size > 1
 
     @buffer = {}
     @last_key_type = ""
   end
-  
+
   # The buffer keeps key/value pairs for all the config options
   # defined on an entry, including the message id and value.
   # For continued lines, the key_type can be empty, so the last
@@ -143,11 +143,11 @@ class PoToJson
       @parsed_values[""] = {}
       return
     end
-  
+
     headers = {}
     # Heading lines may have escaped newlines in them
     @parsed_values[""][1].split(/\\n/).each do |line|
-      next if line.size == 0 
+      next if line.size == 0
 
       if line =~ /(.*?):(.*)/
         key, value = $1, $2
@@ -162,7 +162,7 @@ class PoToJson
         @errors << ["Malformed header #{line}"]
       end
     end
-    
+
     @parsed_values[""] = headers
   end
 end
