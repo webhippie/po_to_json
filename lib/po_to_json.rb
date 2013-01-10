@@ -22,7 +22,7 @@ class PoToJson
   # >>> i18n = new Jed(locales['es'])
   # >>> i18n.gettext('Hello World')
   # => 'Hola Mundo'
-  def generate_for_jed(language_code)
+  def generate_for_jed(language_code, opts={})
     @parsed ||= self.parse
 
     @parsed['']['lang'] = language_code
@@ -34,7 +34,7 @@ class PoToJson
       locale_data: { app: @parsed }
     }
 
-    "var locales = locales || {}; locales['#{language_code}'] = #{MultiJson.dump(jed_json)};"
+    "var locales = locales || {}; locales['#{language_code}'] = #{MultiJson.dump(jed_json, opts)};"
   end
 
 
