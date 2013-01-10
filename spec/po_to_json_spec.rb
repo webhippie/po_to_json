@@ -7,7 +7,7 @@ describe PoToJson do
   end
   describe 'when parsing' do
     before(:all){ @parsed = @subject.parse }
-  
+
     it { @parsed['']['Last-Translator'].should == ' FULL NAME <EMAIL@ADDRESS>' }
     it { @parsed['%{relative_time} ago'].should == [nil, 'vor %{relative_time}'] }
     it { @parsed['Axis'].should == ['Axis', 'Achse', 'Achsen'] }
@@ -29,13 +29,21 @@ describe PoToJson do
         [nil, 'Dies ist eine dynamische Übersetzung, die durch gettext_test_log gefunden wurde!']
     end
   end
-  
+
   describe 'when generating a jed compatible file' do
     before(:all){ @jed_json = @subject.generate_for_jed('de') }
     it { @jed_json.include?("var locales = locales || {}; locales['de'] = ").should be_true }
     it { @jed_json.include?('"domain":"app"').should be_true }
     it { @jed_json.include?('"lang":"de"').should be_true }
     it { @jed_json.include?('"plural_forms":" nplurals=INTEGER; plural=EXPRESSION;"').should be_true }
+
+    context 'with :pretty => true' do
+      before(:all){@jed_json = @subject.generate_for_jed('de', :pretty => true)}
+      it { @jed_json.include?("var locales = locales || {}; locales['de'] = ").should be_true }
+      it { @jed_json.include?('"domain": "app"').should be_true }
+      it { @jed_json.include?('"lang": "de"').should be_true }
+      it { @jed_json.include?('"plural_forms": " nplurals=INTEGER; plural=EXPRESSION;"').should be_true }
+    end
   end
 end
 
