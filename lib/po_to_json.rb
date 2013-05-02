@@ -30,8 +30,8 @@ class PoToJson
     @parsed['']['plural_forms'] ||= @parsed['']['Plural-Forms']
 
     jed_json = {
-      domain: 'app',
-      locale_data: { app: @parsed }
+      :domain => 'app',
+      :locale_data => { :app => @parsed }
     }
 
     if opts[:pretty]
