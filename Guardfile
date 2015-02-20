@@ -22,32 +22,13 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
 
-require "simplecov"
-
-if ENV["CODECLIMATE_REPO_TOKEN"]
-  require "coveralls"
-  require "codeclimate-test-reporter"
-
-  Coveralls.wear!
-  CodeClimate::TestReporter.start
-
-  SimpleCov.start do
-    add_filter "/spec"
-
-    formatter SimpleCov::Formatter::MultiFormatter[
-      SimpleCov::Formatter::HTMLFormatter,
-      CodeClimate::TestReporter::Formatter
-    ]
-  end
-else
-  SimpleCov.start do
-    add_filter "/spec"
-  end
+guard :rspec, cmd: "bundle exec rspec", all_on_start: true do
+  watch(/^spec\/.+_spec\.rb$/)
+  watch(/^lib\/(.+)\.rb$/) { |m| "spec/lib/#{m[1]}_spec.rb" }
+  watch("spec/spec_helper.rb") { "spec" }
 end
 
-require "po_to_json"
-require "rspec"
-
-RSpec.configure do |config|
-  config.mock_with :rspec
+guard :rubocop, all_on_start: true do
+  watch(/.+\.rb$/)
+  watch(/(?:.+\/)?\.rubocop\.yml$/) { |m| File.dirname(m[0]) }
 end

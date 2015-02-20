@@ -1,49 +1,195 @@
-# encoding: utf-8
-require 'spec_helper'
+#
+# Copyright (c) 2012-2015 Dropmysite.com <https://dropmyemail.com>
+# Copyright (c) 2015 Webhippie <http://www.webhippie.de>
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+#
+
+require "spec_helper"
 
 describe PoToJson do
-  before :all do
-    @subject = PoToJson.new(File.join(File.dirname(__FILE__), '..', 'spec', 'test.po'))
-  end
-  describe 'when parsing' do
-    before(:all){ @parsed = @subject.parse }
-
-    it { @parsed['']['Last-Translator'].should == ' FULL NAME <EMAIL@ADDRESS>' }
-    it { @parsed['%{relative_time} ago'].should == [nil, 'vor %{relative_time}'] }
-    it { @parsed['Axis'].should == ['Axis', 'Achse', 'Achsen'] }
-    it { @parsed['Car was successfully created.'].should == [nil, 'Auto wurde erfolgreich gespeichert'] }
-    it { @parsed['Car was successfully updated.'].should == [nil, 'Auto wurde erfolgreich aktualisiert'] }
-    it { @parsed['Car|Model'].should == [nil, 'Modell'] }
-    it { @parsed['Untranslated'].should == [nil, ''] }
-    it { @parsed['Car|Wheels count'].should == [nil, 'Räderzahl'] }
-    it { @parsed['Created'].should == [nil, 'Erstellt'] }
-    it { @parsed['Month'].should == [nil, 'Monat'] }
-    it { @parsed['car'].should == [nil, 'Auto'] }
-    it { @parsed['Umläüte'].should == [nil, 'Umlaute'] }
-    it do
-      @parsed["You should escape '\\\\' as '\\\\\\\\'."].should ==
-        [nil, "Du solltest '\\\\' als '\\\\\\\\' escapen."]
-    end
-    it do
-      @parsed['this is a dynamic translation which was found thorugh gettext_test_log!'].should ==
-        [nil, 'Dies ist eine dynamische Übersetzung, die durch gettext_test_log gefunden wurde!']
-    end
+  let(:po_to_json) do
+    @subject = PoToJson.new(
+      File.expand_path("../fixtures/test.po", __FILE__)
+    )
   end
 
-  describe 'when generating a jed compatible file' do
-    before(:all){ @jed_json = @subject.generate_for_jed('de') }
-    it { @jed_json.include?("var locales = locales || {}; locales['de'] = ").should be_true }
-    it { @jed_json.include?('"domain":"app"').should be_true }
-    it { @jed_json.include?('"lang":"de"').should be_true }
-    it { @jed_json.include?('"plural_forms":" nplurals=INTEGER; plural=EXPRESSION;"').should be_true }
+  describe "parsing" do
+    subject do
+      po_to_json.parse_document
+    end
 
-    context 'with :pretty => true' do
-      before(:all){@jed_json = @subject.generate_for_jed('de', :pretty => true)}
-      it { @jed_json.include?("var locales = locales || {}; locales['de'] = ").should be_true }
-      it { @jed_json.include?('"domain": "app"').should be_true }
-      it { @jed_json.include?('"lang": "de"').should be_true }
-      it { @jed_json.include?('"plural_forms": " nplurals=INTEGER; plural=EXPRESSION;"').should be_true }
+    it "should find the last author" do
+      expect(subject[""]["Last-Translator"]).to(
+        eq("FULL NAME <EMAIL@ADDRESS>")
+      )
+    end
+
+    it "should parse embedded variables" do
+      expect(subject["%{relative_time} ago"]).to(
+        eq([nil, "vor %{relative_time}"])
+      )
+    end
+
+    it "should match pluralizations" do
+      expect(subject["Axis"]).to(
+        eq(["Axis", "Achse", "Achsen"])
+      )
+    end
+
+    it "should match glued values" do
+      expect(subject["Car|Model"]).to(
+        eq([nil, "Modell"])
+      )
+    end
+
+    it "should match embedded glue" do
+      expect(subject["Car|Wheels count"]).to(
+        eq([nil, "Räderzahl"])
+      )
+    end
+
+    it "should return empty strings as well" do
+      expect(subject["Untranslated"]).to(
+        eq([nil, ""])
+      )
+    end
+
+    it "should match german umlauts" do
+      expect(subject["Umläüte"]).to(
+        eq([nil, "Umlaute"])
+      )
+    end
+
+    it "should match escaped values" do
+      expect(subject["You should escape '\\\\' as '\\\\\\\\'."]).to(
+        eq([nil, "Du solltest '\\\\' als '\\\\\\\\' escapen."])
+      )
+    end
+
+    it "should match multiline translations" do
+      expect(subject["this is a dynamic translation which was found!"]).to(
+        eq([nil, "Dies ist eine dynamische Übersetzung, die gefunden wurde!"])
+      )
+    end
+
+    it "should match simple strings" do
+      expect(subject["Car was successfully created."]).to(
+        eq([nil, "Auto wurde erfolgreich gespeichert"])
+      )
+
+      expect(subject["Car was successfully updated."]).to(
+        eq([nil, "Auto wurde erfolgreich aktualisiert"])
+      )
+
+      expect(subject["Created"]).to(
+        eq([nil, "Erstellt"])
+      )
+
+      expect(subject["Month"]).to(
+        eq([nil, "Monat"])
+      )
+
+      expect(subject["car"]).to(
+        eq([nil, "Auto"])
+      )
     end
   end
+
+  describe "generate jed compatible" do
+    describe "with minified output" do
+      subject do
+        po_to_json.generate_for_jed("de")
+      end
+
+      it "should output the var definition" do
+        expect(
+          subject.include?("var locales = locales || {}; locales['de'] = ")
+        ).to be_truthy
+      end
+
+      it "should include domain string" do
+        expect(
+          subject.include?('"domain":"app"')
+        ).to be_truthy
+      end
+
+      it "should include lang string" do
+        expect(
+          subject.include?('"lang":"de"')
+        ).to be_truthy
+      end
+
+      it "should include pluralization" do
+        val = '"plural_forms":"nplurals=INTEGER; plural=EXPRESSION;"'
+        expect(
+          subject.include? val
+        ).to be_truthy
+      end
+
+      it "should include a single line break" do
+        expect(
+          subject.count("\n")
+        ).to be < 1
+      end
+    end
+
+    context "with pretty output" do
+      subject do
+        po_to_json.generate_for_jed("de", pretty: true)
+      end
+
+      it "should output the var definition" do
+        expect(
+          subject.include?("var locales = locales || {}; locales['de'] = ")
+        ).to be_truthy
+      end
+
+      it "should include domain string" do
+        expect(
+          subject.include?('"domain": "app"')
+        ).to be_truthy
+      end
+
+      it "should include lang string" do
+        expect(
+          subject.include?('"lang": "de"')
+        ).to be_truthy
+      end
+
+      it "should include pluralization" do
+        val = '"plural_forms": "nplurals=INTEGER; plural=EXPRESSION;"'
+        expect(
+          subject.include? val
+        ).to be_truthy
+      end
+
+      it "should include multiple line breaks" do
+        expect(
+          subject.count("\n")
+        ).to be > 0
+      end
+    end
+  end
+
+  # describe "generate simple hashes" do
+  #   pending "have to be implemented"
+  # end
 end
-

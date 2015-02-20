@@ -1,12 +1,63 @@
+#
+# Copyright (c) 2012-2015 Dropmysite.com <https://dropmyemail.com>
+# Copyright (c) 2015 Webhippie <http://www.webhippie.de>
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+#
+
+$LOAD_PATH.push File.expand_path("../lib", __FILE__)
+require "po_to_json/version"
+
 Gem::Specification.new do |s|
-  s.name              = 'po_to_json'
-  s.version           = '0.0.7'
-  s.date              = '2013-05-02'
-  s.summary           = 'Convert gettext PO files to json'
-  s.description       = 'Convert gettext PO files to json to use in your javascript app, based po2json.pl (by DuckDuckGo, Inc. http://duckduckgo.com/, Torsten Raudssus <torsten@raudss.us>.)'
-  s.authors           = ["Nubis", "eromirou"]
-  s.email             = 'nubis@woobiz.com.ar'
-  s.files             = Dir["lib/**/*"] + ["README.md", "MIT-LICENSE"]
-  s.homepage          = "https://github.com/nubis/po_to_json"
-  s.add_dependency 'json'
+  s.name = "po_to_json"
+  s.version = PoToJson::Version
+  s.date = Time.now.strftime("%F")
+
+  s.authors = ["Thomas Boerger", "Nubis"]
+  s.email = ["thomas@webhippie.de", "nubis@woobiz.com.ar"]
+
+  s.summary = <<-EOF
+    Convert gettext PO files to JSON
+  EOF
+
+  s.description = <<-EOF
+    Convert gettext PO files to JSON objects so that you can use it in your
+    application.
+  EOF
+
+  s.homepage = "https://github.com/webhippie/po_to_json"
+  s.license = "MIT"
+
+  s.files = ["CHANGELOG.md", "README.md", "LICENSE"]
+  s.files += Dir.glob("lib/**/*")
+  s.files += Dir.glob("bin/**/*")
+
+  s.test_files = Dir.glob("spec/**/*")
+
+  s.executables = []
+  s.require_paths = ["lib"]
+
+  s.add_development_dependency "bundler"
+  s.add_development_dependency "rake"
+  s.add_development_dependency "yard"
+  s.add_development_dependency "rspec"
+
+  s.add_dependency "json", ">= 1.6.0"
 end

@@ -22,32 +22,20 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
 
-require "simplecov"
-
-if ENV["CODECLIMATE_REPO_TOKEN"]
-  require "coveralls"
-  require "codeclimate-test-reporter"
-
-  Coveralls.wear!
-  CodeClimate::TestReporter.start
-
-  SimpleCov.start do
-    add_filter "/spec"
-
-    formatter SimpleCov::Formatter::MultiFormatter[
-      SimpleCov::Formatter::HTMLFormatter,
-      CodeClimate::TestReporter::Formatter
-    ]
-  end
-else
-  SimpleCov.start do
-    add_filter "/spec"
-  end
+begin
+  require "bundler"
+  Bundler::GemHelper.install_tasks
+rescue LoadError
+  warn "Failed to load bundler tasks"
 end
 
-require "po_to_json"
-require "rspec"
+require "rubocop/rake_task"
+RuboCop::RakeTask.new
 
-RSpec.configure do |config|
-  config.mock_with :rspec
-end
+require "yard"
+YARD::Rake::YardocTask.new
+
+require "rspec/core/rake_task"
+RSpec::Core::RakeTask.new(:spec)
+
+task default: [:spec, :rubocop]

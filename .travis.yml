@@ -1,0 +1,27 @@
+language: ruby
+
+rvm:
+  - 2.1.0
+  - 2.0.0
+  - 1.9.3
+
+env:
+  - JSON_VERSION=1.6.8
+  - JSON_VERSION=1.7.7
+  - JSON_VERSION=1.8.2
+
+notifications:
+  email:
+    recipients:
+      - thomas@webhippie.de
+    on_success: change
+    on_failure: always
+
+  irc:
+    channels:
+      - "irc.freenode.net#webhippie"
+    template:
+      - "%{repository_slug} (%{commit}) : %{message} by %{author}"
+      - "You can see details at %{build_url}"
+    on_success: change
+    on_failure: always

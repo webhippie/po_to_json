@@ -1,0 +1,14 @@
+.DS_Store
+
+/.idea
+/.yardoc
+/.bundle
+/.vagrant
+
+/coverage
+/pkg
+/doc
+/vendor
+
+/Gemfile.lock
+/Gemfile.local

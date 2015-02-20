@@ -22,32 +22,18 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
 
-require "simplecov"
+class PoToJson
+  class Version
+    MAJOR = 0
+    MINOR = 1
+    PATCH = 0
 
-if ENV["CODECLIMATE_REPO_TOKEN"]
-  require "coveralls"
-  require "codeclimate-test-reporter"
+    PRE = nil
 
-  Coveralls.wear!
-  CodeClimate::TestReporter.start
-
-  SimpleCov.start do
-    add_filter "/spec"
-
-    formatter SimpleCov::Formatter::MultiFormatter[
-      SimpleCov::Formatter::HTMLFormatter,
-      CodeClimate::TestReporter::Formatter
-    ]
+    class << self
+      def to_s
+        [MAJOR, MINOR, PATCH, PRE].compact.join(".")
+      end
+    end
   end
-else
-  SimpleCov.start do
-    add_filter "/spec"
-  end
-end
-
-require "po_to_json"
-require "rspec"
-
-RSpec.configure do |config|
-  config.mock_with :rspec
 end
