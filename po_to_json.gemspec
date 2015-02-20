@@ -48,7 +48,6 @@ Gem::Specification.new do |s|
 
   s.files = ["CHANGELOG.md", "README.md", "LICENSE"]
   s.files += Dir.glob("lib/**/*")
-  s.files += Dir.glob("bin/**/*")
 
   s.test_files = Dir.glob("spec/**/*")
 
