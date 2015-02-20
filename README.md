@@ -41,7 +41,10 @@ in a Rails project:
 ```ruby
 require "po_to_json"
 
-json = PoToJson.new(Rails.root.join("locale", "de", "app.po").generate_for_jed("de")
+json = PoToJson.new(
+  Rails.root.join("locale", "de", "app.po")
+).generate_for_jed("de")
+
 Rails.root.join("app", "assets", "javascripts", "locale", "de", "app.js").write(json)
 ```
 
@@ -51,7 +54,10 @@ following example:
 ```ruby
 require "po_to_json"
 
-json = PoToJson.new(Rails.root.join("locale", "de", "app.po").generate_for_jed("de", pretty: true)
+json = PoToJson.new(
+  Rails.root.join("locale", "de", "app.po")
+).generate_for_jed("de", pretty: true)
+
 Rails.root.join("app", "assets", "javascripts", "locale", "de", "app.js").write(json)
 ```
 
