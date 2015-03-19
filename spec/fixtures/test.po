@@ -12,17 +12,17 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: app/helpers/translation_helper.rb:3
 msgid "%{relative_time} ago"
 msgstr "vor %{relative_time}"
 
 #: app/views/cars/show.html.erb:5
-msgid "Axis"
-msgid_plural "Axis"
-msgstr[0] "Achse"
-msgstr[1] "Achsen"
+msgid "1 Axis"
+msgid_plural "%{num} Axis"
+msgstr[0] "1 Achse"
+msgstr[1] "%{num} Achsen"
 
 #: app/controllers/cars_controller.rb:47
 msgid "Car was successfully created."

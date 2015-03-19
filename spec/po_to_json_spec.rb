@@ -45,71 +45,71 @@ describe PoToJson do
 
     it "should parse embedded variables" do
       expect(subject["%{relative_time} ago"]).to(
-        eq([nil, "vor %{relative_time}"])
+        eq(["vor %{relative_time}"])
       )
     end
 
     it "should match pluralizations" do
-      expect(subject["Axis"]).to(
-        eq(["Axis", "Achse", "Achsen"])
+      expect(subject["1 Axis"]).to(
+        eq(["1 Achse", "%{num} Achsen"])
       )
     end
 
     it "should match glued values" do
       expect(subject["Car|Model"]).to(
-        eq([nil, "Modell"])
+        eq(["Modell"])
       )
     end
 
     it "should match embedded glue" do
       expect(subject["Car|Wheels count"]).to(
-        eq([nil, "Räderzahl"])
+        eq(["Räderzahl"])
       )
     end
 
     it "should return empty strings as well" do
       expect(subject["Untranslated"]).to(
-        eq([nil, ""])
+        eq([""])
       )
     end
 
     it "should match german umlauts" do
       expect(subject["Umläüte"]).to(
-        eq([nil, "Umlaute"])
+        eq(["Umlaute"])
       )
     end
 
     it "should match escaped values" do
       expect(subject["You should escape '\\\\' as '\\\\\\\\'."]).to(
-        eq([nil, "Du solltest '\\\\' als '\\\\\\\\' escapen."])
+        eq(["Du solltest '\\\\' als '\\\\\\\\' escapen."])
       )
     end
 
     it "should match multiline translations" do
       expect(subject["this is a dynamic translation which was found!"]).to(
-        eq([nil, "Dies ist eine dynamische Übersetzung, die gefunden wurde!"])
+        eq(["Dies ist eine dynamische Übersetzung, die gefunden wurde!"])
       )
     end
 
     it "should match simple strings" do
       expect(subject["Car was successfully created."]).to(
-        eq([nil, "Auto wurde erfolgreich gespeichert"])
+        eq(["Auto wurde erfolgreich gespeichert"])
       )
 
       expect(subject["Car was successfully updated."]).to(
-        eq([nil, "Auto wurde erfolgreich aktualisiert"])
+        eq(["Auto wurde erfolgreich aktualisiert"])
       )
 
       expect(subject["Created"]).to(
-        eq([nil, "Erstellt"])
+        eq(["Erstellt"])
       )
 
       expect(subject["Month"]).to(
-        eq([nil, "Monat"])
+        eq(["Monat"])
       )
 
       expect(subject["car"]).to(
-        eq([nil, "Auto"])
+        eq(["Auto"])
       )
     end
   end
@@ -139,7 +139,7 @@ describe PoToJson do
       end
 
       it "should include pluralization" do
-        val = '"plural_forms":"nplurals=INTEGER; plural=EXPRESSION;"'
+        val = '"plural_forms":"nplurals=2; plural=(n != 1);"'
         expect(
           subject.include? val
         ).to be_truthy
@@ -176,7 +176,7 @@ describe PoToJson do
       end
 
       it "should include pluralization" do
-        val = '"plural_forms": "nplurals=INTEGER; plural=EXPRESSION;"'
+        val = '"plural_forms": "nplurals=2; plural=(n != 1);"'
         expect(
           subject.include? val
         ).to be_truthy

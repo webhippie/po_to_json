@@ -98,7 +98,7 @@ class PoToJson
   def parse_header
     return if reject_header
 
-    values[""][1].split("\\n").each do |line|
+    values[""][0].split("\\n").each do |line|
       next if line.empty?
       build_header_for(line)
     end
@@ -107,7 +107,7 @@ class PoToJson
   end
 
   def reject_header
-    if values[""].nil? || values[""][1].nil?
+    if values[""].nil? || values[""][0].nil?
       values[""] = {}
       true
     else
@@ -173,11 +173,11 @@ class PoToJson
       trans[$1.to_i] = string if key.to_s.match(/^msgstr_(\d+)/)
     end
 
-    trans.unshift(detect_plural)
+    # trans.unshift(detect_plural) if detect_plural
   end
 
   def assign_trans
-    values[detect_ctxt] = trans if trans.size > 1
+    values[detect_ctxt] = trans if trans.size > 0
   end
 
   def push_buffer(value, key = nil)
