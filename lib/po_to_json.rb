@@ -23,15 +23,7 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
 
-ENV["BUNDLE_GEMFILE"] ||= File.expand_path("../../Gemfile", __FILE__)
-
-if File.exist? ENV["BUNDLE_GEMFILE"]
-  require "bundler"
-  Bundler.setup(:default)
-else
-  gem "json", version: ">= 1.6.0"
-end
-
+gem "json", version: ">= 1.6.0"
 require "json"
 
 class PoToJson
