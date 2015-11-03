@@ -207,7 +207,8 @@ class PoToJson
 
   def build_header_for(line)
     if line =~ /(.*?):(.*)/
-      key, value = $1, $2
+      key = $1
+      value = $2
 
       if headers.key? key
         errors.push "Duplicate header: #{line}"
