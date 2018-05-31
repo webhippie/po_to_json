@@ -50,7 +50,8 @@ class PoToJson
     generated = build_json_for(build_jed_for(@parsed))
 
     [
-      "var #{@options[:variable]} = #{@options[:variable]} || {};",
+      @options[:variable_locale_scope] ? 'var' : '',
+      "#{@options[:variable]} = #{@options[:variable]} || {};",
       "#{@options[:variable]}['#{@options[:language]}'] = #{generated};"
     ].join(" ")
   end
@@ -191,7 +192,8 @@ class PoToJson
     defaults = {
       pretty: false,
       domain: "app",
-      variable: "locales"
+      variable: "locales",
+      variable_locale_scope: true
     }
 
     defaults.merge(options)
