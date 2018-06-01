@@ -188,6 +188,17 @@ describe PoToJson do
         ).to be > 0
       end
     end
+    context "without locale scope variable" do
+      subject do
+        po_to_json.generate_for_jed("de", variable_locale_scope: false)
+      end
+
+      it "should output the var definition" do
+        expect(
+          subject.include?("locales = locales || {}; locales['de'] = ")
+        ).to be_truthy
+      end
+    end
   end
 
   # describe "generate simple hashes" do
