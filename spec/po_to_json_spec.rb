@@ -1,4 +1,3 @@
-# -*- coding: UTF-8 -*-
 #
 # Copyright (c) 2012-2015 Dropmysite.com <https://dropmyemail.com>
 # Copyright (c) 2015 Webhippie <http://www.webhippie.de>
@@ -28,7 +27,7 @@ require "spec_helper"
 describe PoToJson do
   let(:po_to_json) do
     @subject = PoToJson.new(
-      File.expand_path("../fixtures/test.po", __FILE__)
+      File.expand_path("fixtures/test.po", __dir__)
     )
   end
 
@@ -141,7 +140,7 @@ describe PoToJson do
       it "should include pluralization" do
         val = '"plural_forms":"nplurals=2; plural=(n != 1);"'
         expect(
-          subject.include? val
+          subject.include?(val)
         ).to be_truthy
       end
 
@@ -178,7 +177,7 @@ describe PoToJson do
       it "should include pluralization" do
         val = '"plural_forms": "nplurals=2; plural=(n != 1);"'
         expect(
-          subject.include? val
+          subject.include?(val)
         ).to be_truthy
       end
 
