@@ -1,4 +1,5 @@
-# -*- coding: UTF-8 -*-
+# frozen_string_literal: true
+
 #
 # Copyright (c) 2012-2015 Dropmysite.com <https://dropmyemail.com>
 # Copyright (c) 2015 Webhippie <http://www.webhippie.de>
@@ -23,26 +24,12 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
 
-require "simplecov"
-
-if ENV["CODECLIMATE_REPO_TOKEN"]
-  require "coveralls"
-  require "codeclimate-test-reporter"
-
-  Coveralls.wear!
-  CodeClimate::TestReporter.start
-
-  SimpleCov.start do
-    add_filter "/spec"
-
-    formatter SimpleCov::Formatter::MultiFormatter[
-      SimpleCov::Formatter::HTMLFormatter,
-      CodeClimate::TestReporter::Formatter
-    ]
-  end
-else
-  SimpleCov.start do
-    add_filter "/spec"
+if ENV.key? "CODACY_PROJECT_TOKEN"
+  begin
+    require "codacy-coverage"
+    Codacy::Reporter.start
+  rescue StandardError
+    puts "Failed to load codacy-coverage gem"
   end
 end
 

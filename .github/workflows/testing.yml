@@ -1,0 +1,75 @@
+---
+name: testing
+
+"on":
+  pull_request:
+  push:
+    branches:
+      - master
+
+jobs:
+  rubocop:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v3
+
+      - name: Setup ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.1
+          bundler: 1.17
+          bundler-cache: true
+
+      - name: Run rubocop
+        run: bundle exec rubocop
+
+  spec:
+    runs-on: ubuntu-20.04
+    needs: rubocop
+
+    strategy:
+      fail-fast: false
+
+      matrix:
+        ruby:
+          - "2.1"
+          - "2.5"
+          - "2.7"
+          - "3.0"
+          - "3.1"
+        json:
+          - "1.6"
+          - "1.7"
+          - "1.8"
+          - "2.0"
+          - "2.1"
+          - "2.2"
+          - "2.3"
+          - "2.4"
+          - "2.5"
+          - "2.6"
+        exclude:
+          - json: "2.6"
+            ruby: "2.1"
+          - json: "2.7"
+            ruby: "2.3"
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v3
+
+      - name: Setup ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+          bundler: 1.17
+          bundler-cache: true
+        env:
+          JSON_VERSION: ${{ matrix.json }}
+
+      - name: Run rspec
+        run: bundle exec rspec
+
+...

@@ -1,11 +1,21 @@
+---
+AllCops:
+  TargetRubyVersion: 2.1
+
+Gemspec/RequiredRubyVersion:
+  Enabled: false
+
+Naming/HeredocDelimiterNaming:
+  Enabled: false
+
+Layout/ElseAlignment:
+  Enabled: false
+
 Style/StringLiterals:
   EnforcedStyle: double_quotes
 
 Style/StringLiteralsInInterpolation:
   EnforcedStyle: double_quotes
-
-Style/AlignParameters:
-  EnforcedStyle: with_fixed_indentation
 
 Style/Documentation:
   Enabled: false
@@ -19,14 +29,14 @@ Style/WordArray:
 Style/PerlBackrefs:
   Enabled: false
 
-Style/ElseAlignment:
-  Enabled: false
-
 Style/Next:
   Enabled: false
 
 Style/RegexpLiteral:
   Enabled: false
+
+Style/SymbolArray:
+  EnforcedStyle: brackets
 
 Metrics/MethodLength:
   CountComments: false
@@ -34,3 +44,26 @@ Metrics/MethodLength:
 
 Metrics/ClassLength:
   Max: 300
+
+Metrics/AbcSize:
+  Max: 25
+
+Metrics/PerceivedComplexity:
+  Max: 10
+
+Metrics/BlockLength:
+  Max: 35
+  Exclude:
+    - "**/*_spec.rb"
+
+Metrics/LineLength:
+  Exclude:
+    - "**/*_spec.rb"
+
+Naming/VariableNumber:
+  EnforcedStyle: snake_case
+
+Style/FormatStringToken:
+  EnforcedStyle: template
+
+...

@@ -1,4 +1,5 @@
-# -*- coding: UTF-8 -*-
+# frozen_string_literal: true
+
 #
 # Copyright (c) 2012-2015 Dropmysite.com <https://dropmyemail.com>
 # Copyright (c) 2015 Webhippie <http://www.webhippie.de>
@@ -23,13 +24,12 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
 
-$LOAD_PATH.push File.expand_path("../lib", __FILE__)
+$LOAD_PATH.push File.expand_path("lib", __dir__)
 require "po_to_json/version"
 
 Gem::Specification.new do |s|
   s.name = "po_to_json"
   s.version = PoToJson::Version
-  s.date = Time.now.strftime("%F")
 
   s.authors = ["Thomas Boerger", "Nubis"]
   s.email = ["thomas@webhippie.de", "nubis@woobiz.com.ar"]
@@ -49,8 +49,6 @@ Gem::Specification.new do |s|
   s.files = ["CHANGELOG.md", "README.md", "LICENSE"]
   s.files += Dir.glob("lib/**/*")
 
-  s.test_files = Dir.glob("spec/**/*")
-
   s.executables = []
   s.require_paths = ["lib"]
 
@@ -58,8 +56,8 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency "bundler"
   s.add_development_dependency "rake"
-  s.add_development_dependency "yard"
   s.add_development_dependency "rspec"
+  s.add_development_dependency "yard"
 
   s.add_dependency "json", ">= 1.6.0"
 end

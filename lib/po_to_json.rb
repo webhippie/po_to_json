@@ -1,4 +1,3 @@
-# -*- coding: UTF-8 -*-
 #
 # Copyright (c) 2012-2015 Dropmysite.com <https://dropmyemail.com>
 # Copyright (c) 2015 Webhippie <http://www.webhippie.de>
@@ -27,16 +26,9 @@ gem "json", version: ">= 1.6.0"
 require "json"
 
 class PoToJson
-  autoload :Version, File.expand_path("../po_to_json/version", __FILE__)
+  autoload :Version, File.expand_path("po_to_json/version", __dir__)
 
-  attr_accessor :files
-  attr_accessor :glue
-  attr_accessor :options
-  attr_accessor :errors
-  attr_accessor :values
-  attr_accessor :buffer
-  attr_accessor :lastkey
-  attr_accessor :trans
+  attr_accessor :files, :glue, :options
 
   def initialize(files, glue = "|")
     @files = files
@@ -50,7 +42,7 @@ class PoToJson
     generated = build_json_for(build_jed_for(@parsed))
 
     [
-      @options[:variable_locale_scope] ? 'var' : '',
+      @options[:variable_locale_scope] ? "var" : "",
       "#{@options[:variable]} = #{@options[:variable]} || {};",
       "#{@options[:variable]}['#{@options[:language]}'] = #{generated};"
     ].join(" ")
@@ -62,7 +54,7 @@ class PoToJson
 
     generated = build_json_for(build_json_for(@parsed))
 
-    fail "Not implemented yet, current value is #{generated}!"
+    raise "Not implemented yet, current value is #{generated}!"
   end
 
   def parse_document
@@ -93,6 +85,7 @@ class PoToJson
 
     values[""][0].split("\\n").each do |line|
       next if line.empty?
+
       build_header_for(line)
     end
 
@@ -149,7 +142,7 @@ class PoToJson
     msgctxt = buffer[:msgctxt]
     msgid = buffer[:msgid]
 
-    if msgctxt && msgctxt.size > 0
+    if msgctxt && !msgctxt.empty?
       [msgctxt, glue, msgid].join("")
     else
       msgid
@@ -158,19 +151,19 @@ class PoToJson
 
   def detect_plural
     plural = buffer[:msgid_plural]
-    plural if plural && plural.size > 0
+    plural if plural && !plural.empty?
   end
 
   def build_trans
     buffer.each do |key, string|
-      trans[$1.to_i] = string if key.to_s.match(/^msgstr_(\d+)/)
+      trans[$1.to_i] = string if key.to_s =~ /^msgstr_(\d+)/
     end
 
     # trans.unshift(detect_plural) if detect_plural
   end
 
   def assign_trans
-    values[detect_ctxt] = trans if trans.size > 0
+    values[detect_ctxt] = trans unless trans.empty?
   end
 
   def push_buffer(value, key = nil)
@@ -269,7 +262,7 @@ class PoToJson
   end
 
   def generic_rejects?(line)
-    if line.match(/^$/) || line.match(/^(#[^~]|[#]$)/)
+    if line.match(/^$/) || line.match(/^(#[^~]|\#$)/)
       flush_buffer && true
     else
       false
