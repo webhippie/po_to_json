@@ -168,7 +168,7 @@ class PoToJson
 
   def push_buffer(value, key = nil)
     value = $1 if value =~ /^"(.*)"/
-    value.gsub(/\\"/, "\"")
+    value.gsub!(/\\"/, "\"")
 
     if key.nil?
       buffer[lastkey] = [

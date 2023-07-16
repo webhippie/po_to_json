@@ -67,3 +67,6 @@ msgstr "Du solltest '\\' als '\\\\' escapen."
 
 msgid "Umläüte"
 msgstr "Umlaute"
+
+msgid "contains double quote, say \"Hello\""
+msgstr "contains double quote, say \"Hello\""
