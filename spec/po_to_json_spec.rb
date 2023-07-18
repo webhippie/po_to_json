@@ -111,6 +111,11 @@ describe PoToJson do
         eq(["Auto"])
       )
     end
+    it "should not espace double quote in msgid" do
+      expect(
+        subject["contains double quote, say \"Hello\""]
+      ).to be_truthy
+    end
   end
 
   describe "generate jed compatible" do
