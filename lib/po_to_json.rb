@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #
 # Copyright (c) 2012-2015 Dropmysite.com <https://dropmyemail.com>
 # Copyright (c) 2015 Webhippie <http://www.webhippie.de>
@@ -143,7 +145,7 @@ class PoToJson
     msgid = buffer[:msgid]
 
     if msgctxt && !msgctxt.empty?
-      [msgctxt, glue, msgid].join("")
+      [msgctxt, glue, msgid].join
     else
       msgid
     end
@@ -168,13 +170,13 @@ class PoToJson
 
   def push_buffer(value, key = nil)
     value = $1 if value =~ /^"(.*)"/
-    value.gsub!(/\\"/, "\"")
+    value.gsub!('\"', "\"")
 
     if key.nil?
       buffer[lastkey] = [
         buffer[lastkey],
         value
-      ].join("")
+      ].join
     else
       buffer[key] = value
       @lastkey = key
@@ -308,7 +310,7 @@ class PoToJson
     }, {
       regex: /^(?:#~ )?msgstr\[(\d+)\]\s+(.*)/,
       index: 2,
-      key: proc { |m| "msgstr_#{m[1]}".to_sym }
+      key: proc { |m| :"msgstr_#{m[1]}" }
     }, {
       regex: /^(?:#~ )?"/,
       index: nil
