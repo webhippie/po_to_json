@@ -19,8 +19,7 @@ jobs:
       - name: Setup ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 2.1
-          bundler: 1.17
+          ruby-version: 2.7
           bundler-cache: true
 
       - name: Run rubocop
@@ -35,7 +34,6 @@ jobs:
 
       matrix:
         ruby:
-          - "2.5"
           - "2.7"
           - "3.0"
           - "3.1"
@@ -53,6 +51,12 @@ jobs:
           - "2.5"
           - "2.6"
           - "2.7"
+          - "2.8"
+          - "2.9"
+          - "2.10"
+          - "2.11"
+          - "2.12"
+          - "2.13"
 
     steps:
       - name: Checkout source
@@ -62,7 +66,6 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
-          bundler: 1.17
           bundler-cache: true
           rubygems: latest
         env:

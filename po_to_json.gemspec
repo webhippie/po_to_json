@@ -30,6 +30,7 @@ require "po_to_json/version"
 Gem::Specification.new do |s|
   s.name = "po_to_json"
   s.version = PoToJson::Version
+  s.platform = Gem::Platform::RUBY
 
   s.authors = ["Thomas Boerger", "Nubis"]
   s.email = ["thomas@webhippie.de", "nubis@woobiz.com.ar"]
@@ -48,16 +49,9 @@ Gem::Specification.new do |s|
 
   s.files = ["CHANGELOG.md", "README.md", "LICENSE"]
   s.files += Dir.glob("lib/**/*")
-
-  s.executables = []
   s.require_paths = ["lib"]
-
   s.required_ruby_version = ">= 1.9.3"
-
-  s.add_development_dependency "bundler"
-  s.add_development_dependency "rake"
-  s.add_development_dependency "rspec"
-  s.add_development_dependency "yard"
+  s.metadata["rubygems_mfa_required"] = "true"
 
   s.add_dependency "json", ">= 1.6.0"
 end
