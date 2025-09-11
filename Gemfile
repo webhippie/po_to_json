@@ -24,7 +24,7 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
 
-source "http://rubygems.org"
+source "https://rubygems.org"
 gemspec
 
 gem "json", "~> #{ENV["JSON_VERSION"]}" if ENV["JSON_VERSION"]
