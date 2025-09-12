@@ -29,7 +29,7 @@ require "po_to_json/version"
 
 Gem::Specification.new do |s|
   s.name = "po_to_json"
-  s.version = PoToJson::Version
+  s.version = PoToJson::VERSION
   s.platform = Gem::Platform::RUBY
 
   s.authors = ["Thomas Boerger", "Nubis"]

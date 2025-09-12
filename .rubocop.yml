@@ -71,4 +71,7 @@ Style/FormatStringToken:
 Naming/PredicateMethod:
   Enabled: false
 
+Style/RedundantFreeze:
+  Enabled: false
+
 ...

@@ -16,7 +16,7 @@ look at the [wokflow][workflow].
 ## Installation
 
 ```ruby
-gem "po_to_json", "~> 2.0"
+gem 'po_to_json', '~> 2.0'
 ```
 
 ## Versioning
@@ -33,7 +33,7 @@ gem using the [Pessimistic Version Constraint][pvc] with two digits of precision
 For example:
 
 ```ruby
-spec.add_dependency "po_to_json", "~> 2.0"
+spec.add_dependency 'po_to_json', '~> 2.0'
 ```
 
 ## Usage
@@ -42,19 +42,19 @@ Most common use would be to generate a Jed ready javascript file. For example,
 in a Rails project:
 
 ```ruby
-require "po_to_json"
+require 'po_to_json'
 
 json = PoToJson.new(
-  Rails.root.join("locale", "de", "app.po")
-).generate_for_jed("de")
+  Rails.root.join('locale', 'de', 'app.po')
+).generate_for_jed('de')
 
 Rails.root.join(
-  "app",
-  "assets",
-  "javascripts",
-  "locale",
-  "de",
-  "app.js"
+  'app',
+  'assets',
+  'javascripts',
+  'locale',
+  'de',
+  'app.js'
 ).write(json)
 ```
 
@@ -62,19 +62,19 @@ If you need a pretty json, add `pretty: true` to `generate_for_jed`, like the
 following example:
 
 ```ruby
-require "po_to_json"
+require 'po_to_json'
 
 json = PoToJson.new(
-  Rails.root.join("locale", "de", "app.po")
-).generate_for_jed("de", pretty: true)
+  Rails.root.join('locale', 'de', 'app.po')
+).generate_for_jed('de', pretty: true)
 
 Rails.root.join(
-  "app",
-  "assets",
-  "javascripts",
-  "locale",
-  "de",
-  "app.js"
+  'app',
+  'assets',
+  'javascripts',
+  'locale',
+  'de',
+  'app.js'
 ).write(json)
 ```
 
@@ -82,8 +82,8 @@ The javascript file generated has a global "locales" object with an attribute
 corresponding to the generated language:
 
 ```javascript
-i18n = new Jed(locales["de"])
-i18n.gettext("Hello World") // Should evaluate to "Hallo Welt"
+i18n = new Jed(locales['de'])
+i18n.gettext('Hello World') // Should evaluate to 'Hallo Welt'
 ```
 
 ## Contributing
