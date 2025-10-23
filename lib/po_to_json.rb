@@ -38,10 +38,8 @@ class PoToJson
   end
 
   def generate_for_jed(language, overwrite = {})
-    @options = parse_options(overwrite.merge(language: language))
-    @parsed ||= inject_meta(parse_document)
-
-    generated = build_json_for(build_jed_for(@parsed))
+    generated = generate_for_json(language, overwrite)
+    return generated if options[:just_json]
 
     [
       @options[:variable_locale_scope] ? "var" : "",
@@ -54,9 +52,7 @@ class PoToJson
     @options = parse_options(overwrite.merge(language: language))
     @parsed ||= inject_meta(parse_document)
 
-    generated = build_json_for(build_json_for(@parsed))
-
-    raise "Not implemented yet, current value is #{generated}!"
+    build_json_for(build_jed_for(@parsed))
   end
 
   def parse_document
