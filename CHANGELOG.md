@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.2.0](https://github.com/webhippie/po_to_json/compare/v2.1.2...v2.2.0) (2025-11-10)
+
+
+### Features
+
+* implement generate_for_json method ([aa8a13a](https://github.com/webhippie/po_to_json/commit/aa8a13ab8e2784ea23b889b775c6c700eb0b7821))
+
 ## [2.1.2](https://github.com/webhippie/po_to_json/compare/v2.1.1...v2.1.2) (2025-10-13)
 
 
