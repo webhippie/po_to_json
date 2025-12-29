@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.0.0](https://github.com/webhippie/po_to_json/compare/v2.2.1...v3.0.0) (2025-12-29)
+
+
+### Features
+
+* **major:** update dependency ruby to v4 ([#59](https://github.com/webhippie/po_to_json/issues/59)) ([88b615e](https://github.com/webhippie/po_to_json/commit/88b615e8957433c3f10f998efe303207ae241ae0))
+
 ## [2.2.1](https://github.com/webhippie/po_to_json/compare/v2.2.0...v2.2.1) (2025-12-22)
 
 
