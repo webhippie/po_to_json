@@ -1,5 +1,17 @@
 # Changelog
 
+## [3.0.1](https://github.com/webhippie/po_to_json/compare/v3.0.0...v3.0.1) (2026-01-19)
+
+### Dependencies
+
+* **patch:** update dependency ruby to v4.0.1 ([#62](https://github.com/webhippie/po_to_json/issues/62)) ([b4416c5](https://github.com/webhippie/po_to_json/commit/b4416c54d045c5ab266b678cadc51612cdd140b2))
+
+### Miscellaneous
+
+* **flake:** updated lockfile [skip ci] ([be7c782](https://github.com/webhippie/po_to_json/commit/be7c78296384f9681d855e55364dedf86cdb0739))
+* **flake:** updated lockfile [skip ci] ([b9139d7](https://github.com/webhippie/po_to_json/commit/b9139d756cd3e770d1c6ab3799da5fdf4e368da9))
+* **flake:** updated lockfile [skip ci] ([c875aa6](https://github.com/webhippie/po_to_json/commit/c875aa67babac21fc0d53920ec57e42f152e0fdf))
+
 ## [3.0.0](https://github.com/webhippie/po_to_json/compare/v2.2.1...v3.0.0) (2025-12-29)
 
 
