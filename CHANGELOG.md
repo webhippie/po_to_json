@@ -1,5 +1,23 @@
 # Changelog
 
+## [3.0.2](https://github.com/webhippie/po_to_json/compare/v3.0.1...v3.0.2) (2026-03-23)
+
+### Dependencies
+
+* **patch:** update dependency ruby to v4.0.2 ([#65](https://github.com/webhippie/po_to_json/issues/65)) ([b06204a](https://github.com/webhippie/po_to_json/commit/b06204a9498d0dbf30bfb50ba6479157a861639a))
+
+### Miscellaneous
+
+* **flake:** updated lockfile [skip ci] ([68a1a1f](https://github.com/webhippie/po_to_json/commit/68a1a1f85dd684763eae6d5aa316a14df1479a94))
+* **flake:** updated lockfile [skip ci] ([adf093a](https://github.com/webhippie/po_to_json/commit/adf093a9682d835384ee8c7f20a26936afd58067))
+* **flake:** updated lockfile [skip ci] ([d0e126e](https://github.com/webhippie/po_to_json/commit/d0e126e2003dba10efda7263e11d758e879e529d))
+* **flake:** updated lockfile [skip ci] ([521ed77](https://github.com/webhippie/po_to_json/commit/521ed77ecbaf072c4f4362180286561d77214e04))
+* **flake:** updated lockfile [skip ci] ([8fb9515](https://github.com/webhippie/po_to_json/commit/8fb95150b11b566db5b7f9b038b676115e252b2c))
+* **flake:** updated lockfile [skip ci] ([37869ae](https://github.com/webhippie/po_to_json/commit/37869aeed799850c6dda684535f4e9fa8535938d))
+* **flake:** updated lockfile [skip ci] ([1f8de34](https://github.com/webhippie/po_to_json/commit/1f8de341099681b85d5c9a1f59768ff1dee71391))
+* **flake:** updated lockfile [skip ci] ([b588fb5](https://github.com/webhippie/po_to_json/commit/b588fb5dbad5f5d3ca0f68cb30465d3e2a85f0d8))
+* **flake:** updated lockfile [skip ci] ([96a77c2](https://github.com/webhippie/po_to_json/commit/96a77c2d79da73902cbe1188cd75dfd1b59c8485))
+
 ## [3.0.1](https://github.com/webhippie/po_to_json/compare/v3.0.0...v3.0.1) (2026-01-19)
 
 ### Dependencies
