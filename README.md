@@ -16,7 +16,7 @@ look at the [wokflow][workflow].
 ## Installation
 
 ```ruby
-gem 'po_to_json', '~> 3.0.2'
+gem 'po_to_json', '~> 3.0.3'
 ```
 
 ## Versioning
@@ -33,7 +33,7 @@ gem using the [Pessimistic Version Constraint][pvc] with two digits of precision
 For example:
 
 ```ruby
-spec.add_dependency 'po_to_json', '~> 3.0.2'
+spec.add_dependency 'po_to_json', '~> 3.0.3'
 ```
 
 ## Usage
