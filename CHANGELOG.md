@@ -1,5 +1,17 @@
 # Changelog
 
+## [3.0.5](https://github.com/webhippie/po_to_json/compare/v3.0.4...v3.0.5) (2026-05-25)
+
+### Dependencies
+
+* **patch:** update dependency ruby to v4.0.5 ([#73](https://github.com/webhippie/po_to_json/issues/73)) ([9503c42](https://github.com/webhippie/po_to_json/commit/9503c42e1704fc65939d25509bcc947b1f05b888))
+
+### Miscellaneous
+
+* **flake:** updated lockfile [skip ci] ([08903ae](https://github.com/webhippie/po_to_json/commit/08903ae6db680e915d3fc15b3eb69aabccfb89fa))
+* replace nixfmt package ([94ecb01](https://github.com/webhippie/po_to_json/commit/94ecb01e065d4444c811c0338d4432f17f3027c3))
+* switch flake input to 25.11 release ([d7b8422](https://github.com/webhippie/po_to_json/commit/d7b84229ec25ffae9a9747feeec1e91d0bad5c9e))
+
 ## [3.0.4](https://github.com/webhippie/po_to_json/compare/v3.0.3...v3.0.4) (2026-05-18)
 
 ### Dependencies
