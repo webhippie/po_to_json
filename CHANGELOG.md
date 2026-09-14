@@ -1,5 +1,15 @@
 # Changelog
 
+## [3.1.0](https://github.com/webhippie/po_to_json/compare/v3.0.6...v3.1.0) (2026-09-14)
+
+### Features
+
+* replace flake with mise tools and pipeline ([1b53fa6](https://github.com/webhippie/po_to_json/commit/1b53fa6a25576dd993fca8855396d976c5078433))
+
+### Dependencies
+
+* **patch:** update dependency prek to v0.5.3 ([#78](https://github.com/webhippie/po_to_json/issues/78)) ([4573007](https://github.com/webhippie/po_to_json/commit/45730074458a4eadb23347b41c8dbc53b9812b8f))
+
 ## [3.0.6](https://github.com/webhippie/po_to_json/compare/v3.0.5...v3.0.6) (2026-07-27)
 
 ## [3.0.5](https://github.com/webhippie/po_to_json/compare/v3.0.4...v3.0.5) (2026-05-25)
